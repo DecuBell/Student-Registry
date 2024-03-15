@@ -10,7 +10,22 @@ on:
     branches: [ "main" ]
 
 jobs:
+  test-security:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+    - name: Use Node.js 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm install
+    - name: Run integrations test
+      run: npm test-npm-security
   build-test:
+    needs: test-security
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,17 +42,3 @@ jobs:
       run: npm install
     - name: Run integrations test
       run: npm test
-  test-security:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v3
-    - name: Use Node.js 20
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20.x
-        cache: 'npm'
-    - name: Install dependencies
-      run: npm install
-    - name: Run integrations test
-      run: npm test-npm-security

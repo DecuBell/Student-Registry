@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "mocha tests/*.js",
-    "start": "node index.js",
-    "test-npm-security": "npm audit"
+    "test-npm-security": "npm audit fix --force",
+    "start": "node index.js"
+    
   }
 }
